@@ -7,8 +7,6 @@
 #include <DirectXMath.h>
 #include <DirectXTex.h>
 #include <d3dcompiler.h>
-#define DIRECTINPUT_VERSION     0x0800   // DirectInputのバージョン指定
-#include <dinput.h>
 #include <wrl.h>
 
 #include"input.h"
@@ -16,8 +14,7 @@
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
+
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -475,7 +472,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
     //input生成、初期化
     input_ = new input();
-    input_->Initalize();
+    input_->Initalize(w.hInstance,hwnd);
 
 #pragma region 描画初期化処理
 
@@ -946,7 +943,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     device->CreateShaderResourceView(texBuff2.Get(), &srvDesc, srvHandle);
 
     size_t textureIndex = 0;
-    BYTE key[256] = {};
+    
 
     // ゲームループ
     while (true) {
@@ -961,11 +958,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
             break;
         }
 
-        // キーボード情報の取得開始
-        keyboard->Acquire();
-        // 全キーの入力状態を取得する
-        keyboard->GetDeviceState(sizeof(key), key);
-
+        input_->Updete();
+       
         //// 数字の0キーが押されていたら
         //if (key[DIK_0]) 
         //{
