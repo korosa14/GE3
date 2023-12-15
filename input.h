@@ -9,13 +9,14 @@
 
 #include<wrl.h>
 
+#include"WinApp.h"
 
 class input
 {
 public:
 
 	//èâä˙âª
-	void Initalize(HINSTANCE hInstance, HWND hwnd);
+	void Initalize(WinApp*winApp);
 	//çXêV
 	void Updete();
 
@@ -27,6 +28,9 @@ public:
 
 
 private:
+	WinApp* winApp_ = nullptr;
+
+	Microsoft::WRL::ComPtr<IDirectInput8>directInput;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard;
 
 	BYTE key[256] = {};
