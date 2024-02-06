@@ -702,6 +702,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
             break;
         }
 
+
         input_->Updete();
 
         // 数字の0キーが押されていたら
@@ -785,10 +786,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     }
 
     delete  input_;
-
     delete dxCommon_;
     winApp_->Finalize();
     delete winApp_;
-
     return 0;
 }
